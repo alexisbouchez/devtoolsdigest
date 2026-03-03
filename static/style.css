@@ -1,3 +1,35 @@
+@font-face {
+  font-family: "IoskeleyMono";
+  src: url("/static/fonts/IoskeleyMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IoskeleyMono";
+  src: url("/static/fonts/IoskeleyMono-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IoskeleyMono";
+  src: url("/static/fonts/IoskeleyMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IoskeleyMono";
+  src: url("/static/fonts/IoskeleyMono-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -43,7 +75,7 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: "Iosevka", monospace;
+  font-family: "IoskeleyMono", monospace;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -129,6 +161,36 @@ button {
 
 button:hover {
   background: var(--accent-hover);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.filter {
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.filter:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--surface);
+}
+
+.filter.active {
+  background: var(--accent);
+  color: var(--btn-text);
+  border-color: var(--accent);
 }
 
 table {

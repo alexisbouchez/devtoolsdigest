@@ -12,14 +12,16 @@ import (
 )
 
 type FeedSource struct {
-	Name string `json:"name"`
-	Feed string `json:"feed"`
+	Name     string `json:"name"`
+	Feed     string `json:"feed"`
+	Category string `json:"category"`
 }
 
 type Article struct {
 	Title     string
 	Link      string
 	Source    string
+	Category string
 	Published time.Time
 }
 
@@ -60,7 +62,7 @@ func fetchAllArticles(sources []FeedSource, since time.Duration) []Article {
 
 			for _, item := range feed.Items {
 				pub := itemPublished(item)
-				if pub.Before(cutoff) {
+				if pub.IsZero() || pub.Before(cutoff) {
 					continue
 				}
 				mu.Lock()
@@ -68,6 +70,7 @@ func fetchAllArticles(sources []FeedSource, since time.Duration) []Article {
 					Title:     item.Title,
 					Link:      item.Link,
 					Source:    s.Name,
+					Category: s.Category,
 					Published: pub,
 				})
 				mu.Unlock()
@@ -91,5 +94,5 @@ func itemPublished(item *gofeed.Item) time.Time {
 	if item.UpdatedParsed != nil {
 		return *item.UpdatedParsed
 	}
-	return time.Now()
+	return time.Time{}
 }

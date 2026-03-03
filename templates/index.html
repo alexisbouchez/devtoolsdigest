@@ -4,6 +4,14 @@
     <span class="count">{{len .Articles}} articles from the last 7 days</span>
     <button type="submit">Create Digest</button>
   </div>
+  {{if .Categories}}
+  <div class="filters">
+    <button type="button" class="filter active" onclick="filterCategory(this, '')">All</button>
+    {{range .Categories}}
+    <button type="button" class="filter" onclick="filterCategory(this, '{{.}}')">{{.}}</button>
+    {{end}}
+  </div>
+  {{end}}
   <table>
     <thead>
       <tr>
@@ -15,7 +23,7 @@
     </thead>
     <tbody>
       {{range .Articles}}
-      <tr>
+      <tr data-category="{{.Category}}">
         <td class="col-check">
           <input type="checkbox" name="selected" value="{{.Title}}&#x1f;{{.Link}}&#x1f;{{.Source}}">
         </td>
@@ -29,4 +37,13 @@
     </tbody>
   </table>
 </form>
+<script>
+function filterCategory(btn, cat) {
+  document.querySelectorAll('.filter').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('tbody tr[data-category]').forEach(function(row) {
+    row.style.display = (!cat || row.dataset.category === cat) ? '' : 'none';
+  });
+}
+</script>
 {{end}}

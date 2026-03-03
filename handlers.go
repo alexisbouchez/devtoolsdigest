@@ -41,9 +41,20 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 
 	articles := fetchAllArticles(sources, 7*24*time.Hour)
 
+	seen := map[string]bool{}
+	var categories []string
+	for _, a := range articles {
+		if a.Category != "" && !seen[a.Category] {
+			seen[a.Category] = true
+			categories = append(categories, a.Category)
+		}
+	}
+	sort.Strings(categories)
+
 	tmpl.ExecuteTemplate(w, "layout.html", map[string]any{
-		"Page":     "index",
-		"Articles": articles,
+		"Page":       "index",
+		"Articles":   articles,
+		"Categories": categories,
 	})
 }
 
