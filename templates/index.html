@@ -1,0 +1,32 @@
+{{define "index.html"}}
+<form method="POST" action="/digest">
+  <div class="toolbar">
+    <span class="count">{{len .Articles}} articles from the last 7 days</span>
+    <button type="submit">Create Digest</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-check"></th>
+        <th>Title</th>
+        <th>Source</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .Articles}}
+      <tr>
+        <td class="col-check">
+          <input type="checkbox" name="selected" value="{{.Title}}&#x1f;{{.Link}}&#x1f;{{.Source}}">
+        </td>
+        <td><a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a></td>
+        <td class="source">{{.Source}}</td>
+        <td class="date">{{.Published.Format "Jan 02"}}</td>
+      </tr>
+      {{else}}
+      <tr><td colspan="4" class="empty">No articles found. Feeds may be loading or unavailable.</td></tr>
+      {{end}}
+    </tbody>
+  </table>
+</form>
+{{end}}

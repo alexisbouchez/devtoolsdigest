@@ -1,0 +1,10 @@
+{{define "digests.html"}}
+<h2>Saved Digests</h2>
+<div class="digest-list">
+  {{range .Dates}}
+  <a href="/digests/{{.}}" class="digest-item">{{.}}</a>
+  {{else}}
+  <p class="empty">No digests saved yet.</p>
+  {{end}}
+</div>
+{{end}}

@@ -1,0 +1,40 @@
+{{define "digest.html"}}
+<form method="POST" action="/digest/save">
+  <input type="hidden" name="date" value="{{.Date}}">
+
+  <div class="toolbar">
+    <h2>Digest — {{.Date}}</h2>
+    <button type="submit">Save Digest</button>
+  </div>
+
+  <label class="field">
+    <span>Intro</span>
+    <textarea name="intro" rows="3" placeholder="Write a short intro for today's digest...">{{.Intro}}</textarea>
+  </label>
+
+  <div class="entries">
+    {{range .Articles}}
+    <div class="entry">
+      <input type="hidden" name="title" value="{{.Title}}">
+      <input type="hidden" name="link" value="{{.Link}}">
+      <input type="hidden" name="source" value="{{.Source}}">
+      <div class="entry-header">
+        <a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a>
+        <span class="source">{{.Source}}</span>
+      </div>
+      <textarea name="summary" rows="2" placeholder="Your take on this article...">{{.Summary}}</textarea>
+    </div>
+    {{end}}
+  </div>
+
+  <div class="preview">
+    <h3>Preview</h3>
+    <pre class="preview-text">{{.Intro}}
+
+{{range .Articles}}- {{.Title}} ({{.Source}})
+  {{.Link}}
+  {{.Summary}}
+{{end}}</pre>
+  </div>
+</form>
+{{end}}
