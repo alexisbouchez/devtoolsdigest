@@ -6,6 +6,12 @@
   <title>DevTools Digest</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5/index.min.css">
   <link rel="stylesheet" href="/static/style.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
 </head>
 <body>
   <header>
@@ -14,9 +20,19 @@
       <div class="nav-links">
         <a href="/">Articles</a>
         <a href="/digests">Digests</a>
+        <button class="theme-toggle" onclick="toggleTheme()">light/dark</button>
       </div>
     </nav>
   </header>
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+  </script>
   <main>
     {{if eq .Page "index"}}
       {{template "index.html" .}}
